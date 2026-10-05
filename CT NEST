@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>CTNest | Find • Rent • Buy • Sell</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f5f7fb;
+    color: #172033;
+}
+
+/* HEADER */
+header {
+    background: white;
+    height: 78px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 22px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-mark {
+    width: 45px;
+    height: 45px;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #087fca, #18b6a4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 21px;
+    font-weight: 900;
+    box-shadow: 0 5px 14px rgba(0,130,200,0.25);
+}
+
+.logo-text {
+    font-size: 25px;
+    font-weight: 800;
+}
+
+.logo-text span {
+    color: #1684e8;
+}
+
+.menu {
+    font-size: 31px;
+    cursor: pointer;
+}
+
+/* HERO */
+.hero {
+    background: linear-gradient(135deg, #087bea, #20a0f5);
+    color: white;
+    padding: 65px 20px 75px;
+    text-align: center;
+}
+
+.hero small {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    padding: 8px 15px;
+    border-radius: 30px;
+    margin-bottom: 18px;
+}
+
+.hero h1 {
+    font-size: 43px;
+    line-height: 1.12;
+    margin-bottom: 18px;
+}
+
+.hero h1 span {
+    color: #dffbff;
+}
+
+.hero p {
+    font-size: 18px;
+    max-width: 620px;
+    margin: auto;
+    line-height: 1.6;
+}
+
+/* SEARCH */
+.search-box {
+    background: white;
+    max-width: 850px;
+    margin: 35px auto 0;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.18);
+}
+
+.search-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.search-box input,
+.search-box select {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    font-size: 16px;
+    outline: none;
+}
+
+.search-button {
+    width: 100%;
+    margin-top: 12px;
+    padding: 17px;
+    border: none;
+    border-radius: 12px;
+    background: #087bea;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+}
+
+/* CATEGORIES */
+.section {
+    max-width: 1050px;
+    margin: auto;
+    padding: 55px 20px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.section-title h2 {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.section-title p {
+    color: #687386;
+}
+
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+}
+
+.category {
+    background: white;
+    padding: 25px 12px;
+    border-radius: 17px;
+    text-align: center;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.07);
+}
+
+.category-icon {
+    font-size: 32px;
+    margin-bottom: 10px;
+}
+
+.category h3 {
+    font-size: 17px;
+}
+
+/* PROPERTY CARDS */
+.property-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.property {
+    background: white;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+.property-image {
+    height: 230px;
+    background-size: cover;
+    background-position: center;
+}
+
+.house-one {
+    background-image:
+    url("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80");
+}
+
+.house-two {
+    background-image:
+    url("https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1000&q=80");
+}
+
+.property-info {
+    padding: 20px;
+}
+
+.badge {
+    display: inline-block;
+    background: #e8f4ff;
+    color: #087bea;
+    padding: 6px 11px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.property-info h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.price {
+    color: #087bea;
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.location {
+    color: #667085;
+    margin-bottom: 15px;
+}
+
+.details {
+    display: flex;
+    gap: 15px;
+    color: #596579;
+    font-size: 14px;
+    border-top: 1px solid #eee;
+    padding-top: 14px;
+}
+
+/* WHY CTNEST */
+.why {
+    background: white;
+}
+
+.feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.feature {
+    padding: 28px 20px;
+    border: 1px solid #e8edf4;
+    border-radius: 17px;
+    text-align: center;
+}
+
+.feature-icon {
+    font-size: 35px;
+    margin-bottom: 12px;
+}
+
+.feature h3 {
+    margin-bottom: 8px;
+}
+
+.feature p {
+    color: #687386;
+    line-height: 1.5;
+    font-size: 14px;
+}
+
+/* HOW IT WORKS */
+.steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.step {
+    text-align: center;
+}
+
+.step-number {
+    width: 48px;
+    height: 48px;
+    margin: auto auto 15px;
+    border-radius: 50%;
+    background: #087bea;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+/* POST PROPERTY */
+.post-property {
+    margin: 20px;
+    border-radius: 25px;
+    padding: 45px 25px;
+    text-align: center;
+    color: white;
+    background: linear-gradient(135deg, #087bea, #18a999);
+}
+
+.post-property h2 {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.post-property p {
+    margin-bottom: 22px;
+}
+
+.post-button {
+    display: inline-block;
+    background: white;
+    color: #087bea;
+    padding: 14px 25px;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+/* FOOTER */
+footer {
+    background: #111827;
+    color: white;
+    padding: 40px 20px 25px;
+    text-align: center;
+}
+
+.footer-logo {
+    font-size: 25px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.footer-logo span {
+    color: #31a8ff;
+}
+
+footer p {
+    color: #aab3c2;
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.footer-links span {
+    color: #d7deea;
+}
+
+/* MOBILE */
+@media (max-width: 700px) {
+
+    .hero h1 {
+        font-size: 38px;
+    }
+
+    .search-row {
+        grid-template-columns: 1fr;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .property-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .steps {
+        grid-template-columns: 1fr;
+        gap: 30px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- HEADER -->
+<header>
+
+    <div class="logo-area">
+
+        <div class="logo-mark">
+            CT
+        </div>
+
+        <div class="logo-text">
+            CT<span>Nest</span>
+        </div>
+
+    </div>
+
+    <div class="menu">
+        ☰
+    </div>
+
+</header>
+
+
+<!-- HERO -->
+<section class="hero">
+
+    <small>📍 Chitwan's Property Marketplace</small>
+
+    <h1>
+        Find Your<br>
+        <span>Perfect Place</span>
+    </h1>
+
+    <p>
+        Find, rent, buy or sell properties easily.
+        Discover your next place with CTNest.
+    </p>
+
+
+    <!-- SEARCH BOX -->
+    <div class="search-box">
+
+        <div class="search-row">
+
+            <input
+                type="text"
+                placeholder="📍 Search location..."
+            >
+
+            <select>
+                <option>Select Property Type</option>
+                <option>Room</option>
+                <option>Flat</option>
+                <option>House</option>
+                <option>Land</option>
+                <option>Commercial</option>
+            </select>
+
+        </div>
+
+        <div class="search-row" style="margin-top:12px;">
+
+            <input
+                type="text"
+                placeholder="💰 Budget / Price"
+            >
+
+            <select>
+                <option>Rent / Buy</option>
+                <option>Rent</option>
+                <option>Buy</option>
+                <option>Sell</option>
+            </select>
+
+        </div>
+
+        <button class="search-button">
+            🔍 Search Property
+        </button>
+
+    </div>
+
+</section>
+
+
+<!-- CATEGORIES -->
+<section class="section">
+
+    <div class="section-title">
+        <h2>Explore Properties</h2>
+        <p>Find the right property for your needs.</p>
+    </div>
+
+    <div class="category-grid">
+
+        <div class="category">
+            <div class="category-icon">🏠</div>
+            <h3>Rent</h3>
+        </div>
+
+        <div class="category">
+            <div class="category-icon">🏡</div>
+            <h3>Buy House</h3>
+        </div>
+
+        <div class="category">
+            <div class="category-icon">🌳</div>
+            <h3>Land</h3>
+        </div>
+
+        <div class="category">
+            <div class="category-icon">🏢</div>
+            <h3>Commercial</h3>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- FEATURED PROPERTIES -->
+<section class="section">
+
+    <div class="section-title">
+        <h2>Featured Properties</h2>
+        <p>Demo listings for the CTNest website.</p>
+    </div>
+
+
+    <div class="property-grid">
+
+        <div class="property">
+
+            <div class="property-image house-one"></div>
+
+            <div class="property-info">
+
+                <span class="badge">FOR RENT</span>
+
+                <h3>Beautiful Family House</h3>
+
+                <div class="price">
+                    Rs. 25,000 / month
+                </div>
+
+                <div class="location">
+                    📍 Bharatpur, Chitwan
+                </div>
+
+                <div class="details">
+                    <span>🛏️ 3 Beds</span>
+                    <span>🚿 2 Baths</span>
+                    <span>🚗 Parking</span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="property">
+
+            <div class="property-image house-two"></div>
+
+            <div class="property-info">
+
+                <span class="badge">FOR SALE</span>
+
+                <h3>Modern House</h3>
+
+                <div class="price">
+                    Rs. 1.25 Crore
+                </div>
+
+                <div class="location">
+                    📍 Ratnanagar, Chitwan
+                </div>
+
+                <div class="details">
+                    <span>🛏️ 4 Beds</span>
+                    <span>🚿 3 Baths</span>
+                    <span>🚗 Parking</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- WHY CTNEST -->
+<section class="why">
+
+    <div class="section">
+
+        <div class="section-title">
+            <h2>Why CTNest?</h2>
+            <p>Making property search easier for everyone.</p>
+        </div>
+
+
+        <div class="feature-grid">
+
+            <div class="feature">
+                <div class="feature-icon">📍</div>
+                <h3>Find Nearby</h3>
+                <p>
+                    Search properties by location
+                    and avoid unnecessary travelling.
+                </p>
+            </div>
+
+
+            <div class="feature">
+                <div class="feature-icon">🔎</div>
+                <h3>Easy Search</h3>
+                <p>
+                    Filter properties by type,
+                    budget and location.
+                </p>
+            </div>
+
+
+            <div class="feature">
+                <div class="feature-icon">🛡️</div>
+                <h3>Trusted Listings</h3>
+                <p>
+                    Properties can be reviewed
+                    before appearing on CTNest.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- HOW IT WORKS -->
+<section class="section">
+
+    <div class="section-title">
+        <h2>How CTNest Works</h2>
+        <p>Finding your place can be simple.</p>
+    </div>
+
+
+    <div class="steps">
+
+        <div class="step">
+
+            <div class="step-number">1</div>
+
+            <h3>Search</h3>
+
+            <p>
+                Search by location,
+                property type and budget.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">2</div>
+
+            <h3>View Property</h3>
+
+            <p>
+                Check photos, price,
+                facilities and location.
+            </p>
+
+        </div>
+
+
+        <div class="step">
+
+            <div class="step-number">3</div>
+
+            <h3>Contact Owner</h3>
+
+            <p>
+                Contact the owner
+                and arrange a visit.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- POST PROPERTY -->
+<section class="post-property">
+
+    <h2>Have a Property?</h2>
+
+    <p>
+        Rent, sell or list your property
+        on CTNest.
+    </p>
+
+    <div class="post-button">
+        + Post Your Property
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <div class="footer-logo">
+        CT<span>Nest</span>
+    </div>
+
+    <p>
+        Find • Rent • Buy • Sell
+    </p>
+
+    <div class="footer-links">
+        <span>Home</span>
+        <span>Rent</span>
+        <span>Buy</span>
+        <span>Sell</span>
+        <span>Contact</span>
+    </div>
+
+    <p>
+        © 2026 CTNest. All rights reserved.
+    </p>
+
+</footer>
+
+</body>
+</html>

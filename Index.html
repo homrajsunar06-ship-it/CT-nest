@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CT Nest | Find Your Perfect Place</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#f6f8fb;color:#17232b}
+button,input,select,textarea{font:inherit}
+header{background:#fff;border-bottom:1px solid #e7edf0;position:sticky;top:0;z-index:20}
+.nav{max-width:1150px;margin:auto;padding:13px 20px;display:flex;align-items:center;justify-content:space-between}
+.logo{display:flex;align-items:center;gap:9px;font-size:24px;font-weight:800;color:#087f8c;text-decoration:none}
+.logoMark{width:42px;height:42px;background:#087f8c;color:white;border-radius:12px;display:grid;place-items:center;font-weight:900}
+.navlinks{display:flex;align-items:center;gap:24px}
+.navlinks a{font-size:14px;font-weight:700;text-decoration:none;color:#33434c}
+.navlinks a:hover{color:#087f8c}
+.primary{background:#087f8c;color:#fff;border:0;border-radius:10px;padding:11px 16px;font-weight:800;cursor:pointer}
+.hero{background:linear-gradient(135deg,#087f8c,#075d6c);color:white;padding:65px 20px 72px}
+.heroInner{max-width:1050px;margin:auto;text-align:center}
+.hero h1{font-size:45px;line-height:1.1;margin-bottom:12px}
+.hero p{font-size:17px;opacity:.92;margin-bottom:28px}
+.search{background:#fff;padding:10px;border-radius:15px;display:grid;grid-template-columns:1.3fr .8fr .45fr;gap:9px;box-shadow:0 12px 35px rgba(0,0,0,.15)}
+.search input,.search select{border:1px solid #e0e7eb;border-radius:10px;padding:14px;outline:none;background:white;color:#27343a}
+.search button{border:0;border-radius:10px;background:#f3b43f;font-weight:900;cursor:pointer}
+.section{max-width:1150px;margin:auto;padding:44px 20px}
+.heading{margin-bottom:20px}
+.heading h2{font-size:27px}
+.heading p{color:#71808a;font-size:14px;margin-top:5px}
+.categories{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.category{background:#fff;border:1px solid #e5ebee;border-radius:15px;padding:22px 12px;text-align:center;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,.04);transition:.2s}
+.category:hover{transform:translateY(-4px);border-color:#9ed4d9;box-shadow:0 9px 25px rgba(0,0,0,.08)}
+.category .icon{font-size:34px;margin-bottom:9px}
+.category h3{font-size:16px;margin-bottom:5px}
+.category p{font-size:12px;color:#7b8790}
+.propertyGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{background:#fff;border-radius:15px;overflow:hidden;border:1px solid #e5ebee;box-shadow:0 4px 15px rgba(0,0,0,.05)}
+.photoBox{height:200px;background:#e8f1f3;position:relative;overflow:hidden}
+.photoBox img{width:100%;height:100%;object-fit:cover;display:block}
+.photoFallback{height:100%;display:grid;place-items:center;font-size:62px}
+.badge{position:absolute;left:12px;top:12px;background:#087f8c;color:#fff;border-radius:7px;padding:6px 9px;font-size:11px;font-weight:900}
+.cardBody{padding:17px}
+.cardBody h3{font-size:18px;margin-bottom:7px}
+.location{font-size:13px;color:#6f7d86;margin-bottom:12px}
+.price{font-size:20px;color:#087f8c;font-weight:900;margin-bottom:12px}
+.meta,.facilityList{display:flex;gap:7px;flex-wrap:wrap}
+.meta span,.facility{font-size:11px;background:#f1f6f7;border-radius:7px;padding:6px 8px;color:#53636b}
+.facility{background:#fff;border:1px solid #e3eaed}
+.view{width:100%;margin-top:15px;padding:10px;border:1px solid #087f8c;background:#fff;color:#087f8c;border-radius:9px;font-weight:800;cursor:pointer}
+.view:hover{background:#087f8c;color:#fff}
+.cta{background:#e9f6f7;border-radius:18px;text-align:center;padding:32px 20px}
+.cta h2{margin-bottom:7px}.cta p{color:#68777f;font-size:14px;margin-bottom:18px}
+footer{background:#14252c;color:#c8d4d8;margin-top:5px}
+.footer{max-width:1150px;margin:auto;padding:34px 20px;display:flex;justify-content:space-between;gap:20px}
+.footer strong{color:#fff;font-size:21px}.footer p{font-size:13px;margin-top:7px}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:100;padding:18px;overflow:auto}
+.modalBox{max-width:720px;margin:25px auto;background:#fff;border-radius:17px;padding:25px;position:relative}
+.close{position:absolute;right:15px;top:9px;background:none;border:0;font-size:30px;color:#68757c;cursor:pointer}
+.modalBox h2{font-size:25px}.sub{color:#73818a;font-size:13px;margin-top:5px}
+.formGrid{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-top:20px}
+.field{display:flex;flex-direction:column;gap:6px}
+.field.full{grid-column:1/-1}
+.field label{font-size:12px;font-weight:800;color:#46545b}
+.field input,.field select,.field textarea{border:1px solid #dce4e8;border-radius:9px;padding:11px;outline:none}
+.field textarea{min-height:90px;resize:vertical}
+.facilityChecks{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.facilityChecks label{background:#f4f7f8;border-radius:8px;padding:9px;font-size:12px;cursor:pointer}
+.photoUpload{border:2px dashed #b9cbd0;border-radius:12px;padding:18px;text-align:center;background:#fafcfc}
+.photoUpload input{width:100%;margin-top:10px}
+.previewGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
+.preview{height:75px;border-radius:8px;overflow:hidden;background:#edf2f3}
+.preview img{width:100%;height:100%;object-fit:cover}
+.submit{grid-column:1/-1;border:0;background:#087f8c;color:#fff;border-radius:10px;padding:13px;font-weight:900;cursor:pointer}
+.detailsPhoto{width:100%;height:280px;object-fit:cover;border-radius:11px;margin:15px 0}
+.empty{grid-column:1/-1;text-align:center;background:#fff;border:1px dashed #ccd7db;border-radius:12px;padding:30px;color:#71808a}
+@media(max-width:800px){
+ .navlinks a{display:none}.hero h1{font-size:35px}
+ .search{grid-template-columns:1fr}.search button{padding:13px}
+ .categories{grid-template-columns:repeat(2,1fr)}.propertyGrid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:560px){
+ .nav{padding:10px 14px}.logo{font-size:20px}.logoMark{width:37px;height:37px}
+ .hero{padding:48px 15px 55px}.hero h1{font-size:30px}
+ .section{padding:34px 14px}.propertyGrid{grid-template-columns:1fr}
+ .formGrid{grid-template-columns:1fr}.field.full,.submit{grid-column:auto}
+ .facilityChecks{grid-template-columns:1fr 1fr}.previewGrid{grid-template-columns:repeat(3,1fr)}
+ .footer{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<header>
+<div class="nav">
+<a class="logo" href="#"><span class="logoMark">CT</span>CT Nest</a>
+<div class="navlinks">
+<a href="#home">Home</a><a href="#properties">Properties</a><a href="#categories">Categories</a>
+<button class="primary" onclick="openPost()">＋ Post Property</button>
+</div>
+</div>
+</header>
+
+<section class="hero" id="home">
+<div class="heroInner">
+<h1>Find Your Perfect Place</h1>
+<p>Rent, buy or sell properties easily with CT Nest.</p>
+<div class="search">
+<input id="searchLocation" placeholder="📍 Search location, e.g. Bharatpur">
+<select id="searchType">
+<option value="">All Property Types</option><option>Rent</option><option>Buy</option><option>Land</option><option>Commercial</option>
+</select>
+<button onclick="searchNow()">Search</button>
+</div>
+</div>
+</section>
+
+<section class="section" id="categories">
+<div class="heading"><h2>Explore Categories</h2><p>Choose what you are looking for</p></div>
+<div class="categories">
+<div class="category" onclick="categorySearch('Rent')"><div class="icon">🏠</div><h3>Rent</h3><p>Rooms, flats & houses</p></div>
+<div class="category" onclick="categorySearch('Buy')"><div class="icon">🏡</div><h3>Buy House</h3><p>Find your new home</p></div>
+<div class="category" onclick="categorySearch('Land')"><div class="icon">🌳</div><h3>Land</h3><p>Plots & land for sale</p></div>
+<div class="category" onclick="categorySearch('Commercial')"><div class="icon">🏢</div><h3>Commercial</h3><p>Shops & office spaces</p></div>
+</div>
+</section>
+
+<section class="section" id="properties">
+<div class="heading"><h2>Featured Properties</h2><p>Find a place that fits your needs</p></div>
+<div class="propertyGrid" id="propertyGrid"></div>
+</section>
+
+<section class="section">
+<div class="cta">
+<h2>Have a property to rent or sell?</h2>
+<p>Post your property on CT Nest and let people find it easily.</p>
+<button class="primary" onclick="openPost()">＋ Post Your Property</button>
+</div>
+</section>
+
+<footer>
+<div class="footer">
+<div><strong>CT Nest</strong><p>Find • Rent • Buy • Sell</p></div>
+<div><p>Property marketplace for Chitwan, Nepal</p><p>© 2026 CT Nest — Demo Version</p></div>
+</div>
+</footer>
+
+<div class="modal" id="postModal">
+<div class="modalBox">
+<button class="close" onclick="closePost()">×</button>
+<h2>Post Your Property</h2>
+<p class="sub">Add your property details and photos.</p>
+
+<form id="postForm" class="formGrid">
+<div class="field"><label>Property Type</label>
+<select id="pType"><option>Rent</option><option>Buy</option><option>Land</option><option>Commercial</option></select></div>
+<div class="field"><label>Purpose</label><select id="pPurpose"><option>Rent</option><option>Sale</option></select></div>
+
+<div class="field full"><label>Property Title</label><input id="pTitle" placeholder="e.g. Beautiful 2BHK Flat at Bharatpur" required></div>
+<div class="field"><label>Price / Rent (Rs.)</label><input id="pPrice" type="number" placeholder="15000" required></div>
+<div class="field"><label>Location</label><input id="pLocation" placeholder="Bharatpur-10, Chitwan" required></div>
+<div class="field full"><label>Address / Landmark</label><input id="pAddress" placeholder="Tole, street, nearby landmark"></div>
+<div class="field"><label>Bedrooms</label><input id="pBeds" type="number" min="0" value="0"></div>
+<div class="field"><label>Bathrooms</label><input id="pBaths" type="number" min="0" value="0"></div>
+
+<div class="field full"><label>Facilities</label>
+<div class="facilityChecks">
+<label><input type="checkbox" value="🅿️ Parking"> 🅿️ Parking</label>
+<label><input type="checkbox" value="💧 Water"> 💧 Water</label>
+<label><input type="checkbox" value="📶 Wi-Fi"> 📶 Wi-Fi</label>
+<label><input type="checkbox" value="🛋️ Furnished"> 🛋️ Furnished</label>
+<label><input type="checkbox" value="🍳 Kitchen"> 🍳 Kitchen</label>
+<label><input type="checkbox" value="⚡ Electricity"> ⚡ Electricity</label>
+</div></div>
+
+<div class="field full"><label>Property Photos</label>
+<div class="photoUpload">
+📸 Select one or more photos
+<input id="pPhotos" type="file" accept="image/*" multiple onchange="previewPhotos()">
+<div class="previewGrid" id="previewGrid"></div>
+</div></div>
+
+<div class="field full"><label>Description</label><textarea id="pDesc" placeholder="Tell people about your property..."></textarea></div>
+<div class="field full"><label>WhatsApp Number</label><input id="pContact" type="tel" placeholder="98XXXXXXXX" required></div>
+
+<button class="submit" type="submit">Publish Property</button>
+</form>
+</div>
+</div>
+
+<div class="modal" id="detailModal">
+<div class="modalBox" id="detailContent"></div>
+</div>
+
+<script>
+const demo=[
+{title:"Modern 2BHK Flat",type:"Rent",price:"15,000",location:"Bharatpur-10, Chitwan",beds:2,baths:1,fac:["🅿️ Parking","💧 Water","📶 Wi-Fi","🍳 Kitchen"],emoji:"🏠"},
+{title:"Beautiful Family House",type:"Buy",price:"85,00,000",location:"Bharatpur-12, Chitwan",beds:3,baths:2,fac:["🅿️ Parking","💧 Water","⚡ Electricity"],emoji:"🏡"},
+{title:"Roadside Commercial Space",type:"Commercial",price:"25,000",location:"Bharatpur, Chitwan",beds:0,baths:1,fac:["🅿️ Parking","💧 Water","📶 Wi-Fi"],emoji:"🏢"}
+];
+
+let selectedImages=[];
+
+function saved(){try{return JSON.parse(localStorage.getItem("ctnestProperties"))||[]}catch(e){return[]}}
+let dbProperties=[];
+function all(){return [...dbProperties,...demo,...saved()]}
+
+// Supabase REST connection. Keep the URL at the project root (not /rest/v1/).
+const SUPABASE_URL = "https://hshkkiujxfnhpkhdxbuw.supabase.co";
+const SUPABASE_KEY = "sb_publishable_UjNy4Jw4zay2FIJG7cR7hQ_dR47uK5r";
+const propertiesEndpoint = `${SUPABASE_URL}/rest/v1/properties`;
+function supabaseHeaders(extra={}){
+  return { apikey: SUPABASE_KEY, Authorization: `Bearer ${SUPABASE_KEY}`, "Content-Type": "application/json", ...extra };
+}
+function fromDatabase(row){
+  return { id:row.id, title:row.title||"Untitled property", type:row.type||"Rent", purpose:row.purpose||"Rent",
+    price:row.price??"", location:row.location||"", address:row.address||"", beds:row.bedrooms??0,
+    baths:row.bathrooms??0, fac:Array.isArray(row.facilities)?row.facilities:[], desc:row.description||"",
+    owner:row.owner_name||"", contact:row.whatsapp_number||"", photo:row.photo_url||"",
+    emoji:row.type==="Land"?"🌳":row.type==="Commercial"?"🏢":row.type==="Buy"?"🏡":"🏠" };
+}
+async function loadProperties(){
+  try{
+    const response=await fetch(`${propertiesEndpoint}?select=*&order=created_at.desc`,{headers:supabaseHeaders()});
+    if(!response.ok){const detail=await response.text();throw new Error(`${response.status}: ${detail}`)}
+    dbProperties=(await response.json()).map(fromDatabase);
+    render();
+  }catch(error){
+    console.error("Supabase load error:",error);
+    alert("Supabase बाट properties load भएन। Table permissions/RLS जाँच्नुपर्छ। Details browser console मा छन्।");
+  }
+}
+function esc(x){return String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[m]))}
+
+function render(list=all()){
+const grid=document.getElementById("propertyGrid");
+if(!list.length){grid.innerHTML='<div class="empty">No properties found. Try another search.</div>';return}
+grid.innerHTML=list.map((p,i)=>`
+<article class="card">
+<div class="photoBox">
+${p.photo ? `<img src="${p.photo}" alt="Property photo">` : `<div class="photoFallback">${p.emoji||"🏠"}</div>`}
+<span class="badge">${p.type==="Buy"?"FOR SALE":p.type.toUpperCase()}</span>
+</div>
+<div class="cardBody">
+<h3>${esc(p.title)}</h3>
+<div class="location">📍 ${esc(p.location)}</div>
+<div class="price">Rs. ${esc(p.price)} ${p.type==="Rent"?'<small style="font-size:12px">/ month</small>':""}</div>
+<div class="meta">${Number(p.beds)>0?`<span>🛏️ ${p.beds} Beds</span>`:""}${Number(p.baths)>0?`<span>🚿 ${p.baths} Baths</span>`:""}</div>
+<div class="facilityList" style="margin-top:10px">${(p.fac||[]).map(f=>`<span class="facility">${esc(f)}</span>`).join("")}</div>
+<button class="view" onclick="showDetails(${i},${JSON.stringify(p).replace(/</g,"\\u003c")})">View Details</button>
+</div>
+</article>`).join("");
+}
+
+function openPost(){document.getElementById("postModal").style.display="block";document.body.style.overflow="hidden"}
+function closePost(){document.getElementById("postModal").style.display="none";document.body.style.overflow="";selectedImages=[];document.getElementById("previewGrid").innerHTML=""}
+function previewPhotos(){
+const files=[...document.getElementById("pPhotos").files];
+selectedImages=[];
+const box=document.getElementById("previewGrid");box.innerHTML="";
+files.slice(0,6).forEach(file=>{
+const reader=new FileReader();
+reader.onload=e=>{selectedImages.push(e.target.result);const d=document.createElement("div");d.className="preview";d.innerHTML=`<img src="${e.target.result}">`;box.appendChild(d)}
+reader.readAsDataURL(file);
+});
+}
+function categorySearch(type){
+document.getElementById("searchType").value=type;
+const result=all().filter(p=>p.type===type);
+render(result);document.getElementById("properties").scrollIntoView({behavior:"smooth"});
+}
+function searchNow(){
+const loc=document.getElementById("searchLocation").value.toLowerCase().trim();
+const type=document.getElementById("searchType").value;
+render(all().filter(p=>(!loc||String(p.location).toLowerCase().includes(loc))&&(!type||p.type===type)));
+document.getElementById("properties").scrollIntoView({behavior:"smooth"});
+}
+
+document.getElementById("postForm").addEventListener("submit",async function(e){
+e.preventDefault();
+const facilities=[...document.querySelectorAll(".facilityChecks input:checked")].map(x=>x.value);
+const type=document.getElementById("pType").value;
+const payload={
+ title:document.getElementById("pTitle").value.trim(),
+ type,
+ purpose:document.getElementById("pPurpose").value,
+ price:Number(document.getElementById("pPrice").value),
+ location:document.getElementById("pLocation").value.trim(),
+ address:document.getElementById("pAddress").value.trim(),
+ bedrooms:Number(document.getElementById("pBeds").value||0),
+ bathrooms:Number(document.getElementById("pBaths").value||0),
+ facilities,
+ description:document.getElementById("pDesc").value.trim(),
+ whatsapp_number:document.getElementById("pContact").value.trim(),
+ photo_url:null
+};
+const button=this.querySelector('button[type="submit"]');
+button.disabled=true;button.textContent="Publishing...";
+try{
+ const response=await fetch(propertiesEndpoint,{method:"POST",headers:supabaseHeaders({Prefer:"return=representation"}),body:JSON.stringify(payload)});
+ if(!response.ok){const detail=await response.text();throw new Error(`${response.status}: ${detail}`)}
+ const rows=await response.json();
+ if(rows[0]) dbProperties.unshift(fromDatabase(rows[0]));
+ this.reset();closePost();render();document.getElementById("properties").scrollIntoView({behavior:"smooth"});
+ alert("Property database मा publish भयो! 🎉 फोटोको permanent upload चाहिँ अर्को step मा जोड्नुपर्छ।");
+}catch(error){
+ console.error("Supabase publish error:",error);
+ alert("Property save भएन। Supabase RLS/permissions मिलाउनुपर्छ। Error: "+error.message);
+}finally{button.disabled=false;button.textContent="Publish Property";}
+});
+
+function showDetails(i,p){
+const photo=p.photo?`<img class="detailsPhoto" src="${p.photo}">`:"";
+document.getElementById("detailContent").innerHTML=`
+<button class="close" onclick="closeDetails()">×</button>
+${photo}
+<h2>${esc(p.title)}</h2>
+<p class="location" style="margin-top:8px">📍 ${esc(p.location)}${p.address?" — "+esc(p.address):""}</p>
+<div class="price">Rs. ${esc(p.price)} ${p.type==="Rent"?"/ month":""}</div>
+<div class="meta">${p.beds?`<span>🛏️ ${p.beds} Bedrooms</span>`:""}${p.baths?`<span>🚿 ${p.baths} Bathrooms</span>`:""}</div>
+<div class="facilityList" style="margin-top:14px">${(p.fac||[]).map(f=>`<span class="facility">${esc(f)}</span>`).join("")}</div>
+<p style="margin-top:17px;color:#596870;line-height:1.6">${esc(p.desc||"No description provided.")}</p>
+<hr style="border:0;border-top:1px solid #e6ecef;margin:18px 0">
+<p><b>Owner:</b> ${esc(p.owner||"Not provided")}</p>
+<p style="margin-top:7px"><b>Contact:</b> ${esc(p.contact||"Not provided")}</p>`;
+document.getElementById("detailModal").style.display="block";document.body.style.overflow="hidden";
+}
+function closeDetails(){document.getElementById("detailModal").style.display="none";document.body.style.overflow=""}
+window.onclick=e=>{if(e.target.id==="postModal")closePost();if(e.target.id==="detailModal")closeDetails()}
+
+render();
+loadProperties();
+</script>
+</body>
+</html>
